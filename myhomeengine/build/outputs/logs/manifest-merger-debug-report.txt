@@ -1,0 +1,51 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml:2:1-15:12
+	xmlns:android
+		ADDED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml:2:11-69
+	package
+		ADDED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml:3:5-39
+		INJECTED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml
+		INJECTED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml
+		INJECTED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml
+		INJECTED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml:5:5-66
+	android:name
+		ADDED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml:5:22-64
+application
+ADDED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml:6:5-11:19
+MERGED from [com.android.support:appcompat-v7:23.4.0] /home/brenda/MyHome/myhomeengine/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/brenda/MyHome/myhomeengine/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/brenda/MyHome/myhomeengine/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/brenda/MyHome/myhomeengine/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/brenda/MyHome/myhomeengine/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/brenda/MyHome/myhomeengine/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /home/brenda/MyHome/myhomeengine/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
+	android:supportsRtl
+		ADDED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml:9:9-35
+	android:label
+		ADDED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml:8:9-41
+	android:allowBackup
+		ADDED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml:7:9-35
+uses-sdk
+INJECTED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:appcompat-v7:23.4.0] /home/brenda/MyHome/myhomeengine/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /home/brenda/MyHome/myhomeengine/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:5:5-44
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/brenda/MyHome/myhomeengine/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/brenda/MyHome/myhomeengine/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/brenda/MyHome/myhomeengine/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /home/brenda/MyHome/myhomeengine/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /home/brenda/MyHome/myhomeengine/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43
+	android:targetSdkVersion
+		INJECTED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml
+		INJECTED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml
+		INJECTED from /home/brenda/MyHome/myhomeengine/src/main/AndroidManifest.xml
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:23.4.0] /home/brenda/MyHome/myhomeengine/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:23:9-75

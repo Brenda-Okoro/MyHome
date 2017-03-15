@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/home/brenda/MyHome/myhomeengine/src/main/jniLibs"/></dataSet><dataSet config="debug"><source path="/home/brenda/MyHome/myhomeengine/src/debug/jniLibs"/></dataSet></merger>
