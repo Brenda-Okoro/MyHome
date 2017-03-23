@@ -32,8 +32,6 @@ public class OauthHelper {
             .post(null)
             .addHeader("content-type", "audio/wav")
             .addHeader("authorization", "OODMVYPEJE3HAJQXXOOIK4WWEMQHVRCV")
-            .addHeader("cache-control", "no-cache")
-            .addHeader("postman-token", "d120a1aa-c3a4-d561-b1fd-f16873ba4a20")
             .build();
 
         try {
