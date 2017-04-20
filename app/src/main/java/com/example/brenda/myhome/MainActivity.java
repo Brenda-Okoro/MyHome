@@ -23,6 +23,20 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.pddstudio.talking.Talk;
 import com.pddstudio.talking.model.SpeechObject;
+import com.pubnub.api.PNConfiguration;
+import com.pubnub.api.PubNub;
+import com.pubnub.api.callbacks.PNCallback;
+import com.pubnub.api.callbacks.SubscribeCallback;
+import com.pubnub.api.enums.PNStatusCategory;
+import com.pubnub.api.models.consumer.PNPublishResult;
+import com.pubnub.api.models.consumer.PNStatus;
+import com.pubnub.api.models.consumer.history.PNHistoryItemResult;
+import com.pubnub.api.models.consumer.history.PNHistoryResult;
+import com.pubnub.api.models.consumer.pubsub.PNMessageResult;
+import com.pubnub.api.models.consumer.pubsub.PNPresenceEventResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +44,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import ai.wit.sdk.IWitListener;
 import ai.wit.sdk.Wit;
@@ -51,9 +67,10 @@ public class MainActivity extends AppCompatActivity implements IWitListener {
     private static String mFileName = null;
     private RecordButton mRecordButton = null;
     private MediaRecorder mRecorder = null;
-    // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
     private String[] permissions = {Manifest.permission.RECORD_AUDIO};
+    public PubNub pubNub;
+    PNConfiguration pnConfiguration = new PNConfiguration();
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -68,15 +85,12 @@ public class MainActivity extends AppCompatActivity implements IWitListener {
     }
 
     private void onRecord(boolean start) {
-//        if (start) {
-//            startRecording();
-//        } else {
-//            stopRecording();
-//            uploadRecording();
-//        }
-
         try {
-            wit.toggleListening();
+            if (start) {
+                wit.startListening();
+            } else {
+                wit.stopListening();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -109,41 +123,35 @@ public class MainActivity extends AppCompatActivity implements IWitListener {
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
     }
-
-
-    private void startRecording() {
-        mRecorder = new MediaRecorder();
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setOutputFile(mFileName);
-        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-//
-        try {
-            mRecorder.prepare();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "prepare() failed");
-        }
-
-        mRecorder.start();
-    }
-
-    private void stopRecording() {
-        mRecorder.stop();
-        mRecorder.release();
-        mRecorder = null;
-    }
-
 
     @Override
-    public void witDidGraspIntent(ArrayList<WitOutcome> response, String message, Error error) {
-        Log.d(LOG_TAG, String.valueOf(response.size()));
+    public void witDidGraspIntent(ArrayList<WitOutcome> responses, String message, Error error) {
+        Log.d(LOG_TAG, String.valueOf(responses.size()));
 
-        Log.d(LOG_TAG, new Gson().toJson(response, ArrayList.class));
+        Log.d(LOG_TAG, new Gson().toJson(responses));
+
+        List<String> messages = new ArrayList<>();
+        for (WitOutcome response : responses) {
+            messages.add(response.get_text());
+        }
+
+        pubNub.publish()
+                .message(messages)
+                .channel("demo_tutorial")
+                .shouldStore(true)
+                .usePOST(true)
+                .ttl(1)
+                .async(new PNCallback<PNPublishResult>() {
+                    @Override
+                    public void onResponse(PNPublishResult result, PNStatus status) {
+                        Log.d(LOG_TAG, "publish..." + status);
+                        if (status.isError()) Log.d(LOG_TAG, "publish: ERROR");
+
+                    }
+                });
 
     }
 
@@ -174,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements IWitListener {
 
         OnClickListener clicker = new OnClickListener() {
             public void onClick(View v) {
+
                 onRecord(mStartRecording);
                 if (mStartRecording) {
                     setText("Stop recording");
@@ -190,7 +199,6 @@ public class MainActivity extends AppCompatActivity implements IWitListener {
             setOnClickListener(clicker);
         }
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements IWitListener {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Please Confirm what you just said", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "please click on the Mic", Toast.LENGTH_LONG).show();
 
                 ActivityCompat.requestPermissions(MainActivity.this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
                 LinearLayout ll = new LinearLayout(MainActivity.this);
@@ -226,6 +234,32 @@ public class MainActivity extends AppCompatActivity implements IWitListener {
             }
 
         });
+
+        pnConfiguration.setSubscribeKey("sub-c-abe16b9e-1565-11e7-aca9-02ee2ddab7fe");
+        pnConfiguration.setPublishKey("pub-c-acf79b63-bb93-4958-8131-c1eef111d1b5");
+        pubNub = new PubNub(pnConfiguration);
+        pubNub.addListener(new SubscribeCallback() {
+            @Override
+            public void status(PubNub pubnub, PNStatus status) {
+                Log.d(LOG_TAG, "sub status..." + status);
+                if (status.isError()) Log.d(LOG_TAG, "sub status: ERROR");
+            }
+
+            @Override
+            public void message(PubNub pubnub, PNMessageResult message) {
+                Log.d(LOG_TAG, "sub message..." + message);
+            }
+
+            @Override
+            public void presence(PubNub pubnub, PNPresenceEventResult presence) {
+
+            }
+        });
+
+        pubNub.subscribe()
+                .channels(Arrays.asList("demo_tutorial"))
+                .execute();
+
     }
 
     @Override
@@ -235,8 +269,6 @@ public class MainActivity extends AppCompatActivity implements IWitListener {
             mRecorder.release();
             mRecorder = null;
         }
-
-
     }
 }
 
