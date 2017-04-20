@@ -27,5 +27,7 @@ dependencies {
     compile 'com.pddstudio:talk:1.0.0'
     compile 'com.pubnub:pubnub-gson:4.5.0'
     compile 'com.koushikdutta.ion:ion:2.1.4'
+    compile 'commons-io:commons-io:2.5'
     compile files('libs/wit.sdk.jar')
+
 }

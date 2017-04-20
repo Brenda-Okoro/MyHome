@@ -35,6 +35,7 @@ import com.pubnub.api.models.consumer.history.PNHistoryResult;
 import com.pubnub.api.models.consumer.pubsub.PNMessageResult;
 import com.pubnub.api.models.consumer.pubsub.PNPresenceEventResult;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements IWitListener {
     private String[] permissions = {Manifest.permission.RECORD_AUDIO};
     public PubNub pubNub;
     PNConfiguration pnConfiguration = new PNConfiguration();
+    JSONObject jsonObject = new JSONObject();
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -134,12 +136,21 @@ public class MainActivity extends AppCompatActivity implements IWitListener {
         Log.d(LOG_TAG, new Gson().toJson(responses));
 
         List<String> messages = new ArrayList<>();
+
+
         for (WitOutcome response : responses) {
             messages.add(response.get_text());
         }
 
+        try {
+            jsonObject.put("text", messages.get(messages.size() - 1));
+            responses.clear();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         pubNub.publish()
-                .message(messages)
+                .message(jsonObject)
                 .channel("demo_tutorial")
                 .shouldStore(true)
                 .usePOST(true)
