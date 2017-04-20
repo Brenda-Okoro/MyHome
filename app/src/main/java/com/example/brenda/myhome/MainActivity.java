@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements IWitListener {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "please click on the Mic", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "please click the Mic", Toast.LENGTH_LONG).show();
 
                 ActivityCompat.requestPermissions(MainActivity.this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
                 LinearLayout ll = new LinearLayout(MainActivity.this);
